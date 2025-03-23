@@ -27,6 +27,7 @@ source env/bin/activate
 pip install -r requirements.txt
 pip install flask psycopg2
 pip install python-dotenv
+pip install flask psycopg2 bcrypt flask-jwt-extended
 
 
 ### 4. Configure Environment Variable
@@ -37,6 +38,9 @@ DB_HOST=localhost
 DB_PORT=5432
 
 ### 5. Initialize the Database
+psql -U postgres -f /yourpath/init_database.sql
+
+
 CREATE DATABASE expense_pocket;
 
 CREATE TABLE users (
