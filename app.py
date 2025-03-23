@@ -32,7 +32,9 @@ def register():
     try:
         connection = connect_db()
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO users (username, password_hash) VALUES (%s, %s)", (username, password_hash))
+        cursor.execute("INSERT INTO users (username, password_hash) VALUES (%s, %s)",
+            (username, password_hash.decode('utf-8'))  # Save as a string
+            )
         connection.commit()
         connection.close()
         return jsonify({"message": "User registered successfully!"}), 201
@@ -61,18 +63,22 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+
 # 新增支出記錄
 @app.route('/expenses', methods=['POST'])
 @jwt_required()
 def add_expense():
-    current_user = get_jwt_identity()
-    data = request.json
-    amount = data['amount']
-    category = data['category']
-    date = data['date']
-    description = data.get('description', '')
-
     try:
+        current_user = get_jwt_identity()
+        print(f"DEBUG: Current user is {current_user}")
+        data = request.json
+        print(f"DEBUG: Request data: {data}")
+
+        amount = data['amount']
+        category = data['category']
+        date = data['date']
+        description = data.get('description', '')
+
         connection = connect_db()
         cursor = connection.cursor()
         cursor.execute(
@@ -83,20 +89,24 @@ def add_expense():
         connection.close()
         return jsonify({"message": "Expense added successfully!"}), 201
     except Exception as e:
+        print(f"ERROR: {str(e)}")
         return jsonify({"error": str(e)}), 400
+
 
 # 查詢所有支出記錄
 @app.route('/expenses', methods=['GET'])
 @jwt_required()
 def get_expenses():
     current_user = get_jwt_identity()
-
+    data = request.json
     try:
         connection = connect_db()
         cursor = connection.cursor()
         cursor.execute("SELECT amount, category, date, description FROM expenses WHERE user_id = %s", (current_user,))
         expenses = cursor.fetchall()
         connection.close()
+        print(f"DEBUG: Current user is {get_jwt_identity()}")
+        print(f"DEBUG: Received data: {data}")
         return jsonify(expenses), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
