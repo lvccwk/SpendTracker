@@ -40,25 +40,6 @@ DB_PORT=5432
 ### 5. Initialize the Database
 psql -U postgres -f /yourpath/init_database.sql
 
-
-CREATE DATABASE expense_pocket;
-
-CREATE TABLE users (
-id SERIAL PRIMARY KEY,
-username VARCHAR(50) UNIQUE NOT NULL,
-password_hash TEXT NOT NULL
-);
-
-CREATE TABLE expenses (
-id SERIAL PRIMARY KEY,
-user_id INT NOT NULL,
-amount DECIMAL(10, 2) NOT NULL,
-category VARCHAR(50) NOT NULL,
-date DATE NOT NULL,
-description TEXT,
-FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
 ### 6. Run the Application
 python -m venv env
 python app.py
