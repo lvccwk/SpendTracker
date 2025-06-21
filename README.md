@@ -1,6 +1,6 @@
 ## Introduction
 
-ExpensePocket is a system designed to record and categorize daily expenses. This guide provides detailed instructions for setting up and running the project locally.
+SpendTrackeris a system designed to record and categorize daily expenses. This guide provides detailed instructions for setting up and running the project locally.
 
 ---
 
@@ -11,9 +11,9 @@ ExpensePocket is a system designed to record and categorize daily expenses. This
 First, clone this project to your local environment:
 
 ```bash
-git clone https://github.com/<your-username>/ExpensePocket.git
+git clone https://github.com/<your-username>/SpendTracker.git
 
-cd ExpensePocket
+cd SpendTracker
 
 
 ### 2. Create and Activate a Virtual Environment
